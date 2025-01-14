@@ -1,0 +1,70 @@
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin:0;
+    box-sizing:border-box;
+}
+
+
+.main{
+    background-color: black;
+    height: 100vh;
+    text-align:center
+}
+
+.maintext {
+    color: white;
+}
+
+nav {
+    background-color: black;
+    height: 70px;
+    margin-top: -16px;
+  }
+  
+
+  nav li {
+    float: left;
+    list-style-type: none;
+    width: 150px;
+    text-align: center;     
+    position:relative; 
+  }
+
+
+  nav li a {
+    text-decoration: none;
+    color: white;
+    line-height: 70px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+
+  nav li a:hover {
+    color: #5dbcd2;
+  }
+
+
+  nav a::before {
+    content:'';
+    display: block;
+    height:10px;
+    width:100%;
+    background-color:#66ffcc;
+    position:absolute;
+    top:0;
+    width:0%;
+  }
+
+
+  nav a:hover::before {
+    width:100%;
+    transition: all ease-in-out 250ms;
+  }
+
+
+  .active {
+    background-color:#403d39;
+  }
