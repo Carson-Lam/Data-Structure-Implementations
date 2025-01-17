@@ -21,7 +21,16 @@
       </nav>
     <div class="main container-fluid mx-auto d-flex justify-content-center align-items-center">
         <!-- <p class="maintext"> Sorting algorithm visualizations goes here</p> -->
-         <div class="block"></div>
+        <div class=".container-fluid mx-auto" >
+          <h2 class = "maintext">QuickSorter</h2>
+          <form class="mt-3 d-flex flex-column justify-content-center align-items-center" id="inputForm">
+              <label for="input" class="subheading">Enter a string to be sorted (Seperate numbers with a comma): <br> </label>
+              <input type="text" id="input" name="input" required placeholder="Example: 3,4,1,9,5,3,8,4,5,3" style="width:35vw">
+          </form>
+          <div class="output mt-3" id="output">
+            <h4 class="subheading p-3" id="outputText">Sorted output</h4>
+          </div>
+      </div>
     </div>
 
     <!--Script-->
