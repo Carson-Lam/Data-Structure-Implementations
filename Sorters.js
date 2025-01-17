@@ -9,6 +9,8 @@ class Node {
     }
 }
 
+
+
 class SortableList {
     constructor() {
         this.head = null;
@@ -45,7 +47,7 @@ class SortableList {
     }
 
     //Makes the partitions during the sort
-    partition(lo, hi) {
+    async partition(lo, hi) {
         //Empty list case
         if (lo == null | hi == null) return null;
 
@@ -54,29 +56,44 @@ class SortableList {
         let previous = null;
         const pivot = hi; //Lomuto's partitioning places pivot at hi
 
+        let swapped = false;
+
         for (let j = lo; j != hi; j = j.next) {
             if (this.less(j.item, pivot.item)) {
-                this.exch(i, j);
+                if(i !== j){
+                    this.exch(i,j);
+                    console.log(this.toString());
+                    document.getElementById("outputText").innerHTML = this.toString();
+                    await delay(500);
+                }
                 previous = i;
                 i = i.next;
             }
         }
-        this.exch(i, pivot);
+        if (i !== pivot) {
+            this.exch(i, pivot);
+            console.log(this.toString());
+            document.getElementById("outputText").innerHTML = this.toString();
+            await delay(500);
+        }
         return (previous == lo) ? null : previous;
     }
 
-    sort() {
+    async sort() {
         this.sortNodes(this.head, this.tail);
     }
 
-    sortNodes(lo, hi) {
+    async sortNodes(lo, hi) {
+        //Base case
         if (lo == null || lo == hi || lo == hi.next) return;
-        const pivot = this.partition(lo, hi);
-        if (pivot != null) this.sortNodes(lo, pivot);
+
+        //Partition and get pivot
+        const pivot = await this.partition(lo, hi);
+        if (pivot != null) await this.sortNodes(lo, pivot);
         if (pivot != null && pivot.next != null) {
-            this.sortNodes(pivot.next, hi);
+            await this.sortNodes(pivot.next, hi);
         } else if (pivot == null) {
-            this.sortNodes(lo.next, hi);
+            await this.sortNodes(lo.next, hi);
         }
     }
 
@@ -86,12 +103,22 @@ class SortableList {
         while (n !== null) {
             s += n.item;
             if (n.next !== null) {
-                s += "->"; // Only add "->" if there's a next node
+                s += " -> "; // Only add "->" if there's a next node
             }
             n = n.next;
         }
         return s;
     }
+    async visualize() {
+        const outputElement = document.getElementById("outputText");
+        outputElement.innerHTML = this.toString();
+        console.log(this.toString());
+        await delay(500);
+    }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /* 
@@ -120,11 +147,13 @@ document.getElementById('inputForm').addEventListener('submit', async function (
                     const numberValue = parseFloat(num.trim()); //Convert to number
                     if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
                 }
+                await list.visualize();
                 list.sort();
                 document.getElementById("outputText").innerHTML = list.toString();
                 console.log(list.toString());
             } else {
                 const list = convertStringToSortableList(input);
+                await list.visualize();
                 list.sort();
                 document.getElementById("outputText").innerHTML = list.toString();
                 console.log(list.toString());
