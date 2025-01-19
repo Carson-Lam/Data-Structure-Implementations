@@ -34,7 +34,7 @@
     box-sizing: border-box;
 }
 
-/* BUTTON STYLINE */
+/* BUTTON AND INPUT STYLINE */
 /************************************************************************/
 .sorterButton {
     background-color: #282828;
@@ -50,9 +50,35 @@
 
 
 .button-container {
-    background-color: red;
+    /* background-color: red; */
     text-align: left;
 
+}
+
+.inputButton {
+    height: 100%;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-size: 25px;
+    padding: 0px 13px;
+    margin-left: 15px;
+}
+
+.input {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    background-color: #282828;
+    color: white;
+    border: none;
+}
+
+.input:focus {
+    outline: none;
+    background-color: #282828;
+    color: white;
 }
 
 
@@ -72,10 +98,14 @@
 }
 
 .secondary {
-    background-color: blue;
+    /* background-color: blue; */
     height: auto;
+    width: 50vw;
 }
 
+.inputForm{
+    /* background-color: red; */
+}
 
 /* TEXT STYLING */
 /************************************************************************/
@@ -86,6 +116,13 @@
 }
 
 .subheading {
+    color: white;
+    font-family: 'Outfit', 'Helvetica', sans-serif;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+.outputText{
     color: white;
     font-family: 'Outfit', 'Helvetica', sans-serif;
     font-weight: 100;
@@ -133,20 +170,6 @@
     to {
         border-color: transparent;
     }
-}
-
-.input {
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    background-color: #282828;
-    color: white;
-    border-radius: 8px;
-    border: none;
-}
-
-.input:focus {
-    outline: none;
 }
 
 /* NAVBAR STYLING */
