@@ -1,3 +1,6 @@
+/*
+* Author: Carson Lam
+*/
 /* Visualization styling */
 /************************************************************************/
 .block {
@@ -15,6 +18,7 @@
     font-weight: 100;
     font-display: swap;
 }
+
 @font-face {
     font-family: 'Outfit';
     src: url('./fonts/Outfit/static/Outfit-Regular.ttf') format('truetype');
@@ -30,6 +34,28 @@
     box-sizing: border-box;
 }
 
+/* BUTTON STYLINE */
+/************************************************************************/
+.sorterButton {
+    background-color: #282828;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin-left: 0;
+}
+
+.sorterButton:hover {
+    background-color: #61595a;
+}
+
+
+.button-container {
+    background-color: red;
+    text-align: left;
+
+}
+
+
 /* DIV STYLING */
 /************************************************************************/
 .main {
@@ -39,24 +65,88 @@
     height: calc(100vh - 70px);
 }
 
-.output{
-    background-color: black;
-    border-radius:5px;
+.output {
+    border: 0.5px solid white;
+    border-radius: 8px;
+    width: 100%;
 }
+
+.secondary {
+    background-color: blue;
+    height: auto;
+}
+
 
 /* TEXT STYLING */
 /************************************************************************/
 .maintext {
     color: white;
     font-family: 'Outfit', 'Helvetica', sans-serif;
-    font-weight:200;
+    font-weight: 200;
 }
 
-.subheading{
+.subheading {
     color: white;
     font-family: 'Outfit', 'Helvetica', sans-serif;
-    font-weight:100;
-    font-size:20px;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+.typewriter .maintext {
+    display: flex;
+    width: fit-content;
+    /* background-color: green; */
+    overflow: hidden;
+    border-right: .15em solid white;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .05em;
+    animation:
+        typing 1.0s steps(40, end),
+        blink-caret .75s step-end infinite,
+        hide-caret 0s 4s forwards;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: white;
+    }
+}
+
+@keyframes hide-caret {
+    to {
+        border-color: transparent;
+    }
+}
+
+.input {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    background-color: #282828;
+    color: white;
+    border-radius: 8px;
+    border: none;
+}
+
+.input:focus {
+    outline: none;
 }
 
 /* NAVBAR STYLING */
@@ -69,7 +159,7 @@ nav {
 }
 
 nav ul {
-    display:flex;
+    display: flex;
     list-style: none;
     list-style-type: none;
     justify-content: flex-start;
@@ -108,7 +198,7 @@ nav a::before {
     display: block;
     height: 10px;
     width: 100%;
-    background-color:white;
+    background-color: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -126,4 +216,5 @@ nav a:hover::before {
 .active {
     background-color: #181414;
 }
+
 /************************************************************************/

@@ -164,3 +164,7 @@ document.getElementById('inputForm').addEventListener('submit', async function (
         console.error("Cannot sort this input: ", error);
     }
 });
+
+document.getElementById('msButton').addEventListener('click', async function (event) {
+    event.preventDefault();
+});

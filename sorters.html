@@ -1,40 +1,54 @@
+<!--Author: Carson Lam -->
 <!DOCTYPE html>
 <html lang="en">
 
 <html>
 
 <head>
-    <title> Sorting Algorithm visualization </title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <title> Sorting Algorithm visualization </title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <nav id = "MID">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <!-- <li><a href="dfs-bfs.html">DFS and BFS</a></li> -->
-          <li><a class="active" href="#MID">Sorting Algorithms</a></li>
-          <!-- <li><a href="red-black-tree.html">Red-Black trees</a></li> -->
-        </ul>
-      </nav>
-    <div class="main container-fluid mx-auto d-flex justify-content-center align-items-center">
-        <!-- <p class="maintext"> Sorting algorithm visualizations goes here</p> -->
-        <div class=".container-fluid mx-auto" >
-          <h2 class = "maintext">QuickSorter</h2>
-          <form class="mt-3 d-flex flex-column justify-content-center align-items-center" id="inputForm">
-              <label for="input" class="subheading">Enter a string to be sorted (Seperate numbers with a comma): <br> </label>
-              <input type="text" id="input" name="input" required placeholder="Example: 3,4,1,9,5,3,8,4,5,3" style="width:35vw">
-          </form>
-          <div class="output mt-3" id="output">
-            <h4 class="subheading p-3" id="outputText">Sorted output</h4>
-          </div>
+  <nav id="MID">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <!-- <li><a href="dfs-bfs.html">DFS and BFS</a></li> -->
+      <li><a class="active" href="#MID">Sorting Algorithms</a></li>
+      <!-- <li><a href="red-black-tree.html">Red-Black trees</a></li> -->
+    </ul>
+  </nav>
+  <div class="main container-fluid mx-auto d-flex justify-content-center ">
+    
+    <!-- Quicksorter div -->
+    <div class="secondary d-flex flex-column mx-auto">
+      <div class="heading-container d-flex justify-content-center align-items-center">
+        <div class="typewriter">
+          <h2 class="maintext">QuickSorter</h2>
+        </div>
+      </div>
+      <form class="mt-3 d-flex flex-column justify-content-center align-items-center" id="inputForm">
+        <label for="input" class="subheading">Enter a string to be sorted (Seperate numbers with a comma): <br> </label>
+        <input type="text" id="input" name="input" class="input" required placeholder="Example: 3,4,1,9,5,3,8,4,5,3">
+      </form>
+      <div class="output mt-3" id="output">
+        <h4 class="subheading p-3" id="outputText">Sorted output</h4>
+      </div>
+      <div class="button-container mt-3">
+        <button id="qsButton" class="sorterButton" type="button">
+          Quick Sort
+        </button>
+        <button id="msButton" class="sorterButton" type="button">
+          Merge Sort
+        </button>
       </div>
     </div>
+  </div>
 
-    <!--Script-->
-    <script src="sorters.js"></script>
+  <!--Script-->
+  <script src="sorters.js"></script>
 </body>
 
 </html>
