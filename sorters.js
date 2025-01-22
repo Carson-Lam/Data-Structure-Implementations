@@ -108,6 +108,7 @@ class SortableList {
         document.getElementById("outputText").innerHTML = "QUICK SORT FINISHED";
         console.log("QUICK SORT FINISHED");
         await delay(500);
+        if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "Output: " + this.toString();
         console.log("Output " + this.toString());
         sorting = false;
@@ -140,6 +141,7 @@ class SortableList {
         document.getElementById("outputText").innerHTML = "MERGE SORT FINISHED";
         console.log("MERGE SORT FINISHED");
         await delay(500);
+        if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "Output: " + this.toString();
         console.log("Output: " + this.toString());
         sorting = false;
@@ -329,6 +331,10 @@ async function sortInput() {
             alert("Cannot sort this input!")
             console.error("Cannot sort this input: ", error);
         }
+    } else if (selectedSorter == 2) {
+        //HEAP SORT
+        /******************************************************************************/
+        return;
     }
 }
 document.getElementById('inputForm').addEventListener('submit', async function (event) {
@@ -342,6 +348,7 @@ document.getElementById('inputButton').addEventListener('click', async function 
     if (!sorting) await sortInput();
     else return null;
 });
+
 
 document.getElementById('qsButton').addEventListener('click', function (event) {
     event.preventDefault();
@@ -388,6 +395,28 @@ document.getElementById('msButton').addEventListener('click', function (event) {
         selectedSorter = 1;
         console.log(selectedSorter);
     }
+});
 
+document.getElementById('hsButton').addEventListener('click', function (event) {
+    event.preventDefault();
 
+    if (selectedSorter == 2) {
+        return null;
+    } else {
+        //Reset animation
+        title.style.animation = 'none';
+        title.textContent = 'HeapSorter';
+        void title.offsetHeight; //Force reflow
+        title.style.animation = '';
+
+        //Reset output box
+        stopSorting = true; //Triggers quitting condition in sorters
+        sorting = false; //Sets sorting to false in case sorter interrupted and cannot set false at the end
+        console.log("Sorting aborted!");
+        output.textContent = 'Sorted output';
+
+        //Set new sorter
+        selectedSorter = 2;
+        console.log(selectedSorter);
+    }
 });

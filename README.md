@@ -9,14 +9,14 @@ Live visualizations of popular data structures and sorting algorithms such as qu
 - Sorting algorithm visualizations for linked lists
     - Quick sort
     - Merge sort
-    - Heap Sort
+    - Heap Sort **- IN PROGRESS**
     
 - Red-black-tree retrieval visualization **- IN PROGRESS**    
 
 - Depth first search and breadth first search visualization **- IN PROGRESS**
 
 ## Usage
-Follow the github-pages link under *Deployments*.
+Follow the [github-pages link](https://carson-lam.github.io/Data-Structure-Visualizations/) under *Deployments*.
 
 ## Dependencies
 
