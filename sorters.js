@@ -389,18 +389,7 @@ function compareTo(item1, item2) {
     throw new Error("Cannot compare these two items.");
 }
 
-/* 
-Test inputs:
-hungry
-3,4,1,9,5,3,8,4,5,3,12
 
-// const sorter = new HeapSorter();
-// const input = ['K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S'];
-// sorter.a = input;
-// sorter.sort();
-// console.log(input.toString());
-
-*/
 
 //SORTING METHOD CALLS
 /******************************************************************************/
@@ -410,7 +399,7 @@ async function sortInput() {
 
         //QUICK SORT
         try {
-            const input = document.getElementById('input').value;
+            const input = document.getElementById('input').value.trim();
             if (typeof input === "string") {
                 //Number case
                 if (input.includes(',')) {
@@ -433,7 +422,7 @@ async function sortInput() {
 
         //MERGE SORT
         try {
-            const input = document.getElementById('input').value;
+            const input = document.getElementById('input').value.trim();
             if (typeof input === "string") {
                 //Number case
                 if (input.includes(',')) {
@@ -454,7 +443,7 @@ async function sortInput() {
         
         //HEAP SORT
         try {
-            const input = document.getElementById('input').value;
+            const input = document.getElementById('input').value.trim();
             if (typeof input === "string") {
                 let array = [];
 
@@ -489,13 +478,15 @@ async function sortInput() {
 }
 document.getElementById('inputForm').addEventListener('submit', async function (event) {
     event.preventDefault();
-    if (!sorting) await sortInput();
+    //Check whether sort of same type already in progress/input is empty
+    if (!sorting && document.getElementById('input').value.trim() !== '') await sortInput();
     else return null;
 });
 
 document.getElementById('inputButton').addEventListener('click', async function (event) {
     event.preventDefault();
-    if (!sorting) await sortInput();
+    //Check whether sort of same type already in progress/input is empty
+    if (!sorting && document.getElementById('input').value.trim() !== '') await sortInput();
     else return null;
 });
 
@@ -570,3 +561,9 @@ document.getElementById('hsButton').addEventListener('click', function (event) {
         console.log(selectedSorter);
     }
 });
+
+/* 
+Test inputs:
+hungry
+3,4,1,9,5,3,8,4,5,3,12
+*/
