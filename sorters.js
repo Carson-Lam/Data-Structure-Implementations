@@ -19,6 +19,9 @@ class Node {
     }
 }
 
+//QUICK SORT, MERGE SORT IMPLEMENTATION
+//USING LINKED LISTS
+/******************************************************************************/
 class SortableList {
     constructor() {
         this.head = null;
@@ -40,17 +43,8 @@ class SortableList {
 
     //COMPARABLE METHODS
     /******************************************************************************/
-    compareTo(item1, item2) {
-        if (typeof item1 === "string" || typeof item1 === "number") {
-            return item1 < item2 ? -1 : item1 > item2 ? 1 : 0
-        } else if (item1.compareTo && typeof item1.compareTo === "function") {
-            return item1.compareTo(item2);
-        }
-        throw new Error("Cannot compare these two items.");
-    }
-
     less(item1, item2) {
-        return this.compareTo(item1, item2) < 0;
+        return compareTo(item1, item2) < 0;
     }
 
     exch(n, m) {
@@ -253,6 +247,61 @@ class SortableList {
     }
 }
 
+//HEAPSORT IMPLEMENTATION (USING ARRAY)
+/******************************************************************************/
+class HeapSorter {
+    constructor(){
+        this.a = [];
+    }
+
+    less(v, w) {
+        return compareTo(this.a[v-1],this.a[w-1]) < 0;
+
+    }
+
+    exch(n,m){
+        const temp = this.a[n-1];
+        this.a[n-1] = this.a[m-1];
+        this.a[m-1] = temp;
+
+    }
+
+    sink(k, n){
+        while(2*k<=n){
+            let j = 2*k;
+            if ((j<n) && (this.less(j,j+1))) j++;
+            if (this.less(j,k)) break;
+            this.exch(k,j);
+            k = j;
+        }
+    }
+
+    heapSorter(a) {
+        this.a = a;
+        let n = a.length;
+
+        //Math.floor to ensure integer division in n/2 for odd values of n
+        //In Java, int i ensures 3/2 = 1 when n=3
+        for (let i = Math.floor(n / 2); i >= 1; i--){
+            this.sink(i,n);
+        }
+
+        while (n > 1){
+            this.exch(1, n--);
+            this.sink(1,n);
+        }
+        
+        return this.a;
+    }
+
+    heapSort(){
+        this.a = this.heapSorter(this.a);
+    }
+}
+
+// 
+//HELPER METHODS
+/******************************************************************************/
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -265,14 +314,29 @@ function convertStringToSortableList(str) {
     return list;
 }
 
+function compareTo(item1, item2) {
+    if (typeof item1 === "string" || typeof item1 === "number") {
+        return item1 < item2 ? -1 : item1 > item2 ? 1 : 0
+    } else if (item1.compareTo && typeof item1.compareTo === "function") {
+        return item1.compareTo(item2);
+    }
+    throw new Error("Cannot compare these two items.");
+}
+
 /* 
 Test inputs:
 hungry
 3,4,1,9,5,3,8,4,5,3,12
+
+// const sorter = new HeapSorter();
+// const input = ['K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S'];
+// sorter.a = input;
+// sorter.sort();
+// console.log(input.toString());
+
 */
 
 
-// document.getElementById('inputForm').addEventListener('submit',  async function (event) {
 async function sortInput() {
     stopSorting = false;
     if (selectedSorter == 0) {
@@ -332,9 +396,38 @@ async function sortInput() {
             console.error("Cannot sort this input: ", error);
         }
     } else if (selectedSorter == 2) {
+        
         //HEAP SORT
         /******************************************************************************/
-        return;
+        try {
+            const input = document.getElementById('input').value;
+            if (typeof input === "string") {
+                //Number case
+                if (input.includes(',')) {
+                    const list = new HeapSorter();
+                    const numbers = input.split(','); //list becomes array of sirings [num1, num2, num3]
+                    for (const num of numbers) {
+                        const numberValue = parseFloat(num.trim()); //Convert to number
+                        if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
+                    }
+                    await list.heapSort();
+                }
+                //String case
+                else {
+                    const list = convertStringToSortableList(input);
+                    await list.heapSort();
+                }
+            }
+            
+            // const sorter = new HeapSorter();
+            // const input = ['K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S'];
+            // sorter.a = input;
+            // sorter.sort();
+            // console.log(input.toString());
+        } catch (error) {
+            alert("Cannot sort this input!")
+            console.error("Cannot sort this input: ", error);
+        }
     }
 }
 document.getElementById('inputForm').addEventListener('submit', async function (event) {
