@@ -92,16 +92,21 @@ class SortableList {
 
     async quickSort() {
         sorting = true;
+        document.getElementById("outputText").innerHTML = "Input: " + this.toString();
+        await delay(500);
+
+        if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "STARTING QUICK SORT";
         console.log("STARTING QUICK SORT");
         await delay(500);
-        document.getElementById("outputText").innerHTML = "Input: " + this.toString();
-        await delay(500);
+
         await this.sortNodes(this.head, this.tail);
+
         if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "QUICK SORT FINISHED";
         console.log("QUICK SORT FINISHED");
         await delay(500);
+
         if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "Output: " + this.toString();
         console.log("Output " + this.toString());
@@ -126,15 +131,20 @@ class SortableList {
     /******************************************************************************/
     async mergeSort() {
         sorting = true;
-        document.getElementById("outputText").innerHTML = "STARTING MERGE SORT";
-        await delay(500);
         document.getElementById("outputText").innerHTML = "Input: " + this.toString();
         await delay(500);
+
+        if (stopSorting) return null;
+        document.getElementById("outputText").innerHTML = "STARTING MERGE SORT";
+        await delay(500);
+
         this.head = await this.mergeSorter(this.head);
+
         if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "MERGE SORT FINISHED";
         console.log("MERGE SORT FINISHED");
         await delay(500);
+
         if (stopSorting) return null;
         document.getElementById("outputText").innerHTML = "Output: " + this.toString();
         console.log("Output: " + this.toString());
@@ -249,9 +259,9 @@ class SortableList {
 
 //HEAPSORT IMPLEMENTATION (USING ARRAY)
 /******************************************************************************/
-class HeapSorter {
-    constructor(){
-        this.a = [];
+class SortableArray {
+    constructor(initialArray = []){
+        this.a = initialArray;
     }
 
     less(v, w) {
@@ -266,36 +276,75 @@ class HeapSorter {
 
     }
 
-    sink(k, n){
+    async sink(k, n, options= {}){
+        const { isInitialHeapify = false } = options;
         while(2*k<=n){
             let j = 2*k;
             if ((j<n) && (this.less(j,j+1))) j++;
             if (this.less(j,k)) break;
             this.exch(k,j);
+            if (isInitialHeapify) {
+                document.getElementById("outputText").innerHTML = "Initial Heapify:&nbsp;&nbsp;&nbsp;" + this.a.toString();
+                console.log("Initial Heapify: " + this.a.toString());
+                await delay(500);
+            } else {
+                document.getElementById("outputText").innerHTML = "Heapify:&nbsp;&nbsp;&nbsp;" + this.a.toString();
+                console.log("Heapify: " + this.a.toString());
+                await delay(500); 
+            }
             k = j;
         }
     }
 
-    heapSorter(a) {
+    async heapSorter(a) {
         this.a = a;
         let n = a.length;
 
+        //Initial heapify loop, starts from bottom branch
         //Math.floor to ensure integer division in n/2 for odd values of n
         //In Java, int i ensures 3/2 = 1 when n=3
         for (let i = Math.floor(n / 2); i >= 1; i--){
-            this.sink(i,n);
+            await this.sink(i,n, {isInitialHeapify: true});
         }
 
         while (n > 1){
             this.exch(1, n--);
-            this.sink(1,n);
+            document.getElementById("outputText").innerHTML = "Exchange:&nbsp;&nbsp;&nbsp;" + this.a.toString();
+            console.log("Exchange first and last: " + this.a.toString());
+            await delay(700);
+
+            //Removes unecessary sink at end of sort with only 1 element remaining
+            if (!(n==1)){
+                await this.sink(1,n);
+            }
         }
         
         return this.a;
     }
 
-    heapSort(){
-        this.a = this.heapSorter(this.a);
+    async heapSort(){
+        sorting = true;
+        document.getElementById("outputText").innerHTML = "Input: " + this.a.toString();
+        console.log("Input: " + this.a.toString());
+        await delay(500);
+
+
+        if (stopSorting) return null;
+        document.getElementById("outputText").innerHTML = "STARTING HEAP SORT";
+        console.log("STARTING HEAP SORT");
+        await delay(500);
+
+        this.a = await this.heapSorter(this.a);
+        
+        if (stopSorting) return null;
+        document.getElementById("outputText").innerHTML = "HEAP SORT FINISHED";
+        console.log("HEAP SORT FINISHED");
+        await delay(500);
+
+        if (stopSorting) return null;
+        document.getElementById("outputText").innerHTML = "Output: " + this.a.toString();
+        console.log("Output: " + this.a.toString());
+        sorting = false;
     }
 }
 
@@ -313,6 +362,17 @@ function convertStringToSortableList(str) {
     }
     return list;
 }
+
+function convertNumbersToSortableList(str) {
+    const list = new SortableList();
+    const numbers = str.split(','); //list becomes array of sirings [num1, num2, num3]
+    for (const num of numbers) {
+        const numberValue = parseFloat(num.trim()); //Convert to number
+        if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
+    }
+    return list;
+}
+
 
 function compareTo(item1, item2) {
     if (typeof item1 === "string" || typeof item1 === "number") {
@@ -336,24 +396,19 @@ hungry
 
 */
 
-
+//SORTING METHOD CALLS
+/******************************************************************************/
 async function sortInput() {
     stopSorting = false;
     if (selectedSorter == 0) {
 
         //QUICK SORT
-        /******************************************************************************/
         try {
             const input = document.getElementById('input').value;
             if (typeof input === "string") {
                 //Number case
                 if (input.includes(',')) {
-                    const list = new SortableList();
-                    const numbers = input.split(','); //list becomes array of sirings [num1, num2, num3]
-                    for (const num of numbers) {
-                        const numberValue = parseFloat(num.trim()); //Convert to number
-                        if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
-                    }
+                    const list = convertNumbersToSortableList(input);
                     // await list.visualize();
                     await list.quickSort();
                 }
@@ -371,18 +426,12 @@ async function sortInput() {
     } else if (selectedSorter == 1) {
 
         //MERGE SORT
-        /******************************************************************************/
         try {
             const input = document.getElementById('input').value;
             if (typeof input === "string") {
                 //Number case
                 if (input.includes(',')) {
-                    const list = new SortableList();
-                    const numbers = input.split(','); //list becomes array of sirings [num1, num2, num3]
-                    for (const num of numbers) {
-                        const numberValue = parseFloat(num.trim()); //Convert to number
-                        if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
-                    }
+                    const list = convertNumbersToSortableList(input);
                     await list.mergeSort();
                 }
                 //String case
@@ -398,32 +447,34 @@ async function sortInput() {
     } else if (selectedSorter == 2) {
         
         //HEAP SORT
-        /******************************************************************************/
         try {
             const input = document.getElementById('input').value;
             if (typeof input === "string") {
+                let array = [];
+
                 //Number case
                 if (input.includes(',')) {
-                    const list = new HeapSorter();
                     const numbers = input.split(','); //list becomes array of sirings [num1, num2, num3]
                     for (const num of numbers) {
                         const numberValue = parseFloat(num.trim()); //Convert to number
-                        if (!isNaN(numberValue)) list.add(numberValue); //Check if valid number and add to list
+                        if (!isNaN(numberValue)) array.push(numberValue); //Check if valid number and add to list
                     }
-                    await list.heapSort();
+                    console.log("ARRAY INPUT: " + array);
+                    console.log("ARRAY INPUT AS STRING: " + array.toString());
                 }
+
                 //String case
                 else {
-                    const list = convertStringToSortableList(input);
-                    await list.heapSort();
+                    array = input.split(''); //Split string by character, add each char to array
+                    console.log("ARRAY INPUT: " + array);
+                    console.log("ARRAY INPUT AS STRING: " + array.toString());
                 }
+
+                const sortableArray = new SortableArray(array);
+                await sortableArray.heapSort();  
+
+                console.log(sortableArray.a.toString());
             }
-            
-            // const sorter = new HeapSorter();
-            // const input = ['K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S'];
-            // sorter.a = input;
-            // sorter.sort();
-            // console.log(input.toString());
         } catch (error) {
             alert("Cannot sort this input!")
             console.error("Cannot sort this input: ", error);
