@@ -9,7 +9,7 @@ Live visualizations of popular data structures and sorting algorithms such as qu
 - Sorting algorithm visualizations for linked lists
     - Quick sort
     - Merge sort
-    - Heap Sort **- IN PROGRESS**
+    - Heap Sort
     
 - Red-black-tree retrieval visualization **- IN PROGRESS**    
 
