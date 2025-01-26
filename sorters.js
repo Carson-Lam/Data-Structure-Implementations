@@ -278,16 +278,18 @@ class SortableArray {
 
     async sink(k, n, options= {}){
         const { isInitialHeapify = false } = options;
-        while(2*k<=n){
+        while(2*k<=n && !stopSorting){
             let j = 2*k;
             if ((j<n) && (this.less(j,j+1))) j++;
             if (this.less(j,k)) break;
             this.exch(k,j);
             if (isInitialHeapify) {
+                if (stopSorting) return null;
                 document.getElementById("outputText").innerHTML = "Initial Heapify:&nbsp;&nbsp;&nbsp;" + this.a.toString();
                 console.log("Initial Heapify: " + this.a.toString());
                 await delay(500);
             } else {
+                if (stopSorting) return null;
                 document.getElementById("outputText").innerHTML = "Heapify:&nbsp;&nbsp;&nbsp;" + this.a.toString();
                 console.log("Heapify: " + this.a.toString());
                 await delay(500); 
@@ -307,11 +309,16 @@ class SortableArray {
             await this.sink(i,n, {isInitialHeapify: true});
         }
 
-        while (n > 1){
+        while (n > 1 && !stopSorting){
+            //Include "before" state for exchange to show swapping
+            if (stopSorting) return null;
+            document.getElementById("outputText").innerHTML = "Exchange:&nbsp;&nbsp;&nbsp;" + this.a.toString();
+            await delay(300); //Smaller delay
             this.exch(1, n--);
+            if (stopSorting) return null;
             document.getElementById("outputText").innerHTML = "Exchange:&nbsp;&nbsp;&nbsp;" + this.a.toString();
             console.log("Exchange first and last: " + this.a.toString());
-            await delay(700);
+            await delay(500);
 
             //Removes unecessary sink at end of sort with only 1 element remaining
             if (!(n==1)){
@@ -348,7 +355,6 @@ class SortableArray {
     }
 }
 
-// 
 //HELPER METHODS
 /******************************************************************************/
 function delay(ms) {
