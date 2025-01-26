@@ -41,19 +41,12 @@
     border: none;
     color: white;
     padding: 10px 15px;
-    margin-left: 0;
 }
 
 .sorterButton:hover {
     background-color: #61595a;
 }
 
-
-.button-container {
-    /* background-color: red; */
-    text-align: left;
-
-}
 
 .inputButton {
     height: 100%;
@@ -64,6 +57,10 @@
     font-size: 25px;
     padding: 0px 13px;
     margin-left: 15px;
+}
+
+.inputButton:hover{
+    background-color:#bfbfbf;
 }
 
 .input {
@@ -101,10 +98,6 @@
     /* background-color: blue; */
     height: auto;
     width: 50vw;
-}
-
-.inputForm{
-    /* background-color: red; */
 }
 
 /* TEXT STYLING */
